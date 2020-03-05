@@ -1,12 +1,25 @@
 import React, { Component } from 'react';
 
 import './NewPost.css';
+import axios from 'axios';
 
 class NewPost extends Component {
     state = {
         title: '',
         content: '',
-        author: 'Max'
+        wrote: ''
+    }
+
+    postPostHandler = () => {
+        const post = {
+            title: this.state.title,
+            content: this.state.content,
+            author: this.state.wrote
+        }
+        axios.post('https://jsonplaceholder.typicode.com/posts/', post).then(response => {
+            console.log(response)
+        })
+
     }
 
     render () {
@@ -18,11 +31,11 @@ class NewPost extends Component {
                 <label>Content</label>
                 <textarea rows="4" value={this.state.content} onChange={(event) => this.setState({content: event.target.value})} />
                 <label>Author</label>
-                <select value={this.state.author} onChange={(event) => this.setState({author: event.target.value})}>
+                <select value={this.state.wrote} onChange={(event) => this.setState({author: event.target.value})}>
                     <option value="Max">Max</option>
                     <option value="Manu">Manu</option>
                 </select>
-                <button>Add Post</button>
+                <button onClick={this.postPostHandler}>Add Post</button>
             </div>
         );
     }
