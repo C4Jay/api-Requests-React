@@ -5,25 +5,35 @@ import Post from '../../components/Post/Post';
 import FullPost from '../../components/FullPost/FullPost';
 import NewPost from '../../components/NewPost/NewPost';
 import './Blog.css';
+import post from '../../components/Post/Post';
 
 class Blog extends Component {
+
+    state = {
+        posts : []
+    }
 
     componentDidMount () {
         axios.get('https://jsonplaceholder.typicode.com/posts')
         .then(response => {
-            console.log(response)
+            this.setState({posts: response.data});
+            console.log(this.state.posts[0])
         })
     }
 
 
     render () {
+
+        const posts = this.state.posts.map((post, id) => {
+            return <Post title={post.title} userId={post.title}/>
+        })
+
+
         return (
             <div>
                 <section className="Posts">
-                    <Post />
-                    <Post />
-                    <Post />
-                </section>
+                {posts}
+                 </section>
                 <section>
                     <FullPost />
                 </section>
